@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Delete";
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <p><h1>Admin Product Delete</h1></p>
+    @Html.RouteLink("Admin area: Home Index", new { controller = "Home", action = "Index", area = "Admin" });<br>
+    @Html.RouteLink("Admin area: Product Index", new { controller = "Product", action = "Index", area = "Admin" });<br>
+    @Html.RouteLink("Admin area: Product Create", new { controller = "Product", action = "Create", area = "Admin" });
+</body>
+</html>
