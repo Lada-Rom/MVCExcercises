@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Excercise3.Models.Product>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Created Date</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ID</td>
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td>@item.CreatedDate</td>
+        </tr>
+    }
+</table>

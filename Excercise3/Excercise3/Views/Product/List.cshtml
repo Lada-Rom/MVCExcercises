@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Excercise3.Models.Product>
+
+@foreach (var item in Model)
+{
+    <ul>
+        <li><b>@item.Name</b></li>
+        <li>@item.ID</li>
+        <li>@item.Price</li>
+        <li>@item.CreatedDate</li>
+    </ul>
+    <br>
+}
