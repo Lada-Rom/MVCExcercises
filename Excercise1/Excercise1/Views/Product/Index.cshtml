@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Index</title>
+    </head>
+    <body>
+        <h1>Товары в наличии:</h1><br>
+
+        @foreach (var item in Model)
+        { 
+            <p>
+            <h2>Имя продукта: @item.Name</h2><br>
+            <h3>Описание: @item.Description</h3><br>
+            <h3>Цена: @item.Price</h3><br>
+            </p>
+        }
+    </body>
+</html>
