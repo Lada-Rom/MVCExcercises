@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+</head>
+<body>
+    <div>
+        <form action="/Home/RegisterPost" method="post">
+            <label>Login <input type="text" name="Login"></label><br>
+            <label>Password <input type="password" name="Password1"></label><br>
+            <label>Repeat it <input type="password" name="Password2"></label><br>
+            Email <textarea name="Email" rows="1" cols="30"></textarea><br>
+            <input type="submit" value="Register">
+        </form>
+    </div>
+</body>
+</html>
