@@ -15,7 +15,6 @@ Thumbs.db
 *.suo
 *.tlb
 *.tlh
-*.dll
 *.bak
 *.cache
 *.ilk
