@@ -1,9 +1,9 @@
 #include <iostream>
 #include <sstream>
+#include <string>
 
-class Rational
-{
-public:
+class Rational {
+    public:
     Rational() = default;
     Rational(int num, int denom);
 
@@ -15,7 +15,7 @@ public:
     Rational& operator *= (const Rational&);
     Rational& operator /= (const Rational&);
 
-private:
+    private:
     int numerator{0};
     int denominator{1};
 };
@@ -40,17 +40,15 @@ Rational reduce(const Rational&);
 Rational reduce(const int, const int);
 void testParse(const std::string&);
 
-
 //----------------------------------------------------------
 int main()
-try
-{
+try {
     using std::cout;
     using std::endl;
 
     #define PRINT(expr) (std::cout << #expr " => " << (expr) << std::endl)
 
-    Rational f; 
+    Rational f;
 
     PRINT(f += Rational(3, 5));
     PRINT(f -= Rational(2, 5));
@@ -58,12 +56,10 @@ try
     PRINT(f *= Rational(5, 1));
     PRINT(f /= Rational(1, -3));
 
-    try
-    {
+    try {
         PRINT(f += Rational(4, 0));
     }
-    catch(const std::invalid_argument& ex)
-    {
+    catch(const std::invalid_argument& ex) {
         cout << "Expected exception caught: " << ex.what() << endl;
     }
     cout << endl;
@@ -85,149 +81,131 @@ try
 
     #undef PRINT
 }
-catch(const std::exception& ex)
-{
+catch(const std::exception& ex) {
     std::cerr << "ERROR: " << ex.what() << std::endl;
 }
 //----------------------------------------------------------
 
-Rational::Rational(int num, int denom) : numerator(num), denominator(denom)
-{
-    if (denom == 0)
-    {
+Rational::Rational(int num, int denom) : numerator(num), denominator(denom) {
+    if (denom == 0) {
         throw std::invalid_argument("Zero denominator");
     }
 }
 
-std::ostream& operator << (std::ostream& ostrm, const Rational& f)
-{
+std::ostream& operator << (std::ostream& ostrm, const Rational& f) {
     ostrm << f.num();
-    if (f.denom() != 1)
-    {
+    if (f.denom() != 1) {
         ostrm << '/' << f.denom();
     }
     return ostrm;
 }
 
-std::istream& operator >> (std::istream& istrm, Rational& f)
-{
+std::istream& operator >> (std::istream& istrm, Rational& f) {
     int numenator = 0;
     int denominator = 1;
 
-    if (istrm >> numenator)
-    {
+    if (istrm >> numenator) {
         char symbol = 0;
-        if (istrm >> symbol)
-            if (symbol == '/') istrm >> denominator;
-            else istrm.unget();
+        if (istrm >> symbol) {
+            if (symbol == '/') {
+                istrm >> denominator; 
+            }
+            else {
+                istrm.unget();
+            }
+        }
     }
     f = reduce(numenator, denominator);
     return istrm;
 }
 
-
-Rational operator + (const Rational& x, const Rational& y)
-{
-    return reduce(x.num() * y.denom() + y.num() * x.denom(), x.denom() * y.denom());
+Rational operator + (const Rational& x, const Rational& y) {
+    return reduce(x.num() * y.denom() + y.num() * x.denom(),
+        x.denom() * y.denom());
 }
 
-Rational operator - (const Rational& x, const Rational& y)
-{
-    return reduce(x.num() * y.denom() - y.num() * x.denom(), x.denom() * y.denom());
+Rational operator - (const Rational& x, const Rational& y) {
+    return reduce(x.num() * y.denom() - y.num() * x.denom(),
+        x.denom() * y.denom());
 }
 
-Rational operator * (const Rational& x, const Rational& y)
-{
+Rational operator * (const Rational& x, const Rational& y) {
     return reduce(x.num() * y.num(), x.denom() * y.denom());
 }
 
-Rational operator / (const Rational& x, const Rational& y)
-{
+Rational operator / (const Rational& x, const Rational& y) {
     return reduce(x.num() * y.denom(), x.denom() * y.num());
 }
 
-
-Rational& Rational::operator += (const Rational& rhs)
-{
+Rational& Rational::operator += (const Rational& rhs) {
     return *this = *this + rhs;
 }
 
-Rational& Rational::operator -= (const Rational& rhs)
-{
+Rational& Rational::operator -= (const Rational& rhs) {
     return *this = *this - rhs;
 }
 
-Rational& Rational::operator *= (const Rational& rhs)
-{
+Rational& Rational::operator *= (const Rational& rhs) {
     return *this = *this * rhs;
 }
 
-Rational& Rational::operator /= (const Rational& rhs)
-{
+Rational& Rational::operator /= (const Rational& rhs) {
     return *this = *this / rhs;
 }
 
 
-bool operator == (const Rational& x, const Rational& y)
-{
+bool operator == (const Rational& x, const Rational& y) {
     return (x.num() * y.denom() == x.denom() * y.num());
 }
 
-bool operator != (const Rational& x, const Rational& y)
-{
+bool operator != (const Rational& x, const Rational& y) {
     return !(x == y);
 }
 
-bool operator > (const Rational& x, const Rational& y)
-{
+bool operator > (const Rational& x, const Rational& y) {
     return (x.num() * y.denom() > x.denom() * y.num());
 }
 
-bool operator < (const Rational& x, const Rational& y)
-{
+bool operator < (const Rational& x, const Rational& y) {
     return (y > x);
 }
 
-bool operator >= (const Rational& x, const Rational& y)
-{
+bool operator >= (const Rational& x, const Rational& y) {
     return !(x < y);
 }
 
-bool operator <= (const Rational& x, const Rational& y)
-{
+bool operator <= (const Rational& x, const Rational& y) {
     return !(x > y);
 }
 
 
-int gcd(const int x, const int y)
-{
+int gcd(const int x, const int y) {
     return y ? gcd(y, x % y) : std::abs(x);
 }
 
-Rational reduce(const int x, const int y)
-{
+Rational reduce(const int x, const int y) {
     int g = gcd(x, y);
-    if (y < 0) g = -g;
+    if (y < 0)
+        g = -g;
     return {x / g, y / g};
 }
 
-Rational reduce(const Rational& f)
-{
+Rational reduce(const Rational& f) {
     return reduce(f.num(), f.denom());
 }
 
-void testParse(const std::string& str)
-{
-    using namespace std;
+void testParse(const std::string& str) {
+    using std::istringstream;
+    using std::cout;
+    using std::endl;
+
     istringstream istrm(str);
     Rational f;
     istrm >> f;
-    if (istrm) 
-    {
+    if (istrm) {
         cout << "Read success: " << str << " -> " << f << endl;
     }
-    else 
-    {
+    else {
         cout << "Read error : " << str << " -> " << f << endl;
     }
 }
