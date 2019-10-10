@@ -33,7 +33,6 @@ struct Complex {
     static const char leftBrace{ '{' };
     static const char separator{ ',' };
     static const char rightBrace{ '}' };
-
 };
 
 Complex operator+(const Complex& lhs, const Complex& rhs);
