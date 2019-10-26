@@ -7,6 +7,9 @@
     <Filter Include="rational">
       <UniqueIdentifier>{4cddc0ad-fc8b-48d7-9611-c2b8c262c21d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="longint">
+      <UniqueIdentifier>{be9f57f4-6bad-470e-a21b-1916e2b80a52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="complex\complex.cpp">
@@ -15,6 +18,9 @@
     <ClCompile Include="rational\rational.cpp">
       <Filter>rational</Filter>
     </ClCompile>
+    <ClCompile Include="longint\longint.cpp">
+      <Filter>longint</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex\complex.h">
@@ -22,6 +28,9 @@
     </ClInclude>
     <ClInclude Include="rational\rational.h">
       <Filter>rational</Filter>
+    </ClInclude>
+    <ClInclude Include="longint\longint.h">
+      <Filter>longint</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
