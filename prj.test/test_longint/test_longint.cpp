@@ -15,4 +15,7 @@ int main()
 
     std::cout << LongInt(56 * 74 * 32 * 79) << std::endl;
     std::cout << LongInt(-56 * 74 * 32 * 79) << std::endl << std::endl;
+
+    std::cout << LongInt(-56 * 74 * 32 * 79 * 19) / 19 << std::endl;
+    std::cout << LongInt(56 * 74 * 32 * 79 * 19) / -19 << std::endl << std::endl;
 }

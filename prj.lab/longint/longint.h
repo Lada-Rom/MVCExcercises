@@ -24,10 +24,12 @@ public:
 
     int DivWithRemainder(int);
 
+    std::string ToString() const;
+
 private:
 
     using UDigit = uint8_t;
-    using SDigit = int8_t;
+    using SDigit = std::make_signed_t<UDigit>;
     static const auto wordBit = sizeof(UDigit) * CHAR_BIT;
 
     friend LongInt operator+(const LongInt&, const LongInt&);
@@ -38,21 +40,19 @@ private:
     friend std::ostream& operator<<(std::ostream&, const LongInt&);
     friend std::istream& operator>>(std::istream&, LongInt&);
 
-    size_t dataSize() const { return data.size(); }
-
     void borrowBit(size_t);
 
     UDigit& rdata(size_t i) {
-        assert(i < dataSize());
-        return data[dataSize() - i - 1];
+        assert(i < m_data.size());
+        return m_data[m_data.size() - i - 1];
     }
 
     const UDigit& rdata(size_t i) const {
-        assert(i < dataSize());
-        return data[dataSize() - i - 1];
+        assert(i < m_data.size());
+        return m_data[m_data.size() - i - 1];
     }
 
-    std::vector<UDigit> data = std::vector<UDigit>(8, 0);
+    std::vector<UDigit> m_data = std::vector<UDigit>(8);
 };
 
 LongInt operator+(const LongInt&, const LongInt&);
