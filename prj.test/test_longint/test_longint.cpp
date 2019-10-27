@@ -1,5 +1,7 @@
 #include <longint/longint.h>
 
+#include <catch2/catch.h>
+
 int main()
 {
     using tolstenko_l_s::LongInt;
