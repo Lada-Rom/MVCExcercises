@@ -1,60 +1,54 @@
 #include "longint.h"
+
+#include <algorithm>
 #include <vector>
 #include <sstream>
 
+
 namespace tolstenko_l_s {
 
-LongInt::LongInt(int value) {
+void LongInt::normalize()
+{
+    const auto rbegin = std::find_if(m_data.rbegin(), m_data.rend(),
+        [](UDigit digit) { return digit != 0; });
 
-    assert(sizeof(m_data) >= sizeof(value));
+    const auto size = std::max(size_t(1), size_t(m_data.rend() - rbegin));
 
-    if (value < 0) {
-       for (auto& e : m_data) {
-           e = UDigit(-1);
-       }
-    }
-
-    reinterpret_cast<int&> (m_data[0]) = value;
-}
-
-LongInt::operator bool() const {
-    for (auto e : m_data) {
-        if (e) {
-            return true;
-        }
-    }
-    return false;
-}
-
-LongInt operator/(const LongInt& lhs, int rhs) {
-    LongInt t(lhs);
-    t /= rhs;
-    return t;
-}
-
-void LongInt::borrowBit(size_t pos) {
-
-    for (size_t i = pos; i < m_data.size(); ++i)
+    if (size != m_data.size())
     {
-        if (m_data[i]--)
-            break;
+        m_data.resize(size);
     }
+    if (size == 1 && !m_data[0])
+    {
+        m_isNegative = false;
+    }
+}
+
+LongInt::LongInt(int value)
+: m_data(std::max(size_t(1), sizeof(value) / sizeof(UDigit)))
+, m_isNegative(value < 0)
+{
+    reinterpret_cast<int&>(m_data[0]) = std::abs(value);
+    normalize();
 }
 
 int LongInt::DivWithRemainder(int denom) {
 
-    std::lldiv_t q{ 0, IsNegative() ? -1 : 0 };
+    if (denom < 0)
+    {
+        denom = -denom;
+        m_isNegative = !m_isNegative;
+    }
+
+    lldiv_t q {};
 
     for (size_t i = m_data.size(); i--;)
     {
-        const auto nom = m_data[i] + (q.rem << wordBit);
-        q = std::lldiv(nom, denom);
+        q = std::lldiv(m_data[i] + q.rem * digitRank, denom);
         m_data[i] = UDigit(q.quot);
-        if (q.quot < 0)
-        {
-            borrowBit(i + 1);
-        }
     }
+    normalize();
+
     return int(q.rem);
 }
 
@@ -70,7 +64,7 @@ std::string LongInt::ToString() const
     }
 
     std::ostringstream output;
-    if (IsNegative())
+    if (m_isNegative)
         output << '-';
 
     for (auto i = vec.rbegin(); i != vec.rend(); ++i) {
@@ -79,8 +73,17 @@ std::string LongInt::ToString() const
     return output.str();
 }
 
-std::ostream& operator<<(std::ostream& ostrm, const LongInt& rhs) {
+bool operator==(const LongInt& lhs, const LongInt& rhs)
+{
+    return lhs.m_isNegative == rhs.m_isNegative && lhs == rhs;
+}
 
+LongInt operator / (LongInt lhs, int rhs) {
+    lhs /= rhs;
+    return lhs;
+}
+
+std::ostream& operator<<(std::ostream& ostrm, const LongInt& rhs) {
     return ostrm << rhs.ToString();
 }
 
