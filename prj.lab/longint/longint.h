@@ -20,9 +20,9 @@ public:
 
     std::string ToString() const;
 
-    explicit operator bool() const { return m_data.back() != 0; }
+    explicit operator bool() const { return m_digits.back() != 0; }
 
-    LongInt& operator+=(int);
+    LongInt& operator+=(const LongInt&);
     LongInt& operator*=(int);
     LongInt& operator/=(int);
 
@@ -43,14 +43,15 @@ public:
 
 private:
 
-    using UDigit = uint8_t;
-    using SDigit = std::make_signed_t<UDigit>;
-    static constexpr const auto digitBit = sizeof(UDigit) * CHAR_BIT;
-    static constexpr const auto digitRank = 1 << digitBit;
+    using Digit = uint8_t;
+    using Digits = std::vector<Digit>;
+
+    static constexpr const auto digitBit = sizeof(Digit) * CHAR_BIT;
 
     void normalize();
+    static void negate(Digits&);
 
-    std::vector<UDigit> m_data {0};
+    Digits m_digits {0};
     bool m_isNegative = false;
 };
 
