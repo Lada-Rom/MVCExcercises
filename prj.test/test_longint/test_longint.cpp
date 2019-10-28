@@ -29,7 +29,7 @@ TEST_CASE("LongInt tests", "[LongInt]") {
     REQUIRE(LongInt(-17 * 19 * 23 * 29) / 23 == -17 * 19 * 29);
     REQUIRE(LongInt(-17 * 19 * 23 * 29) / -23 == 17 * 19 * 29);
 
-    REQUIRE((LongInt(17 * 19 * 29) *= 23) == 17 * 19 * 23 * 29);
+    REQUIRE((LongInt(17 * 19 * 29) *= 23) == -17 * 19 * 23 * 29);
     REQUIRE((LongInt(17 * 19 * 29) *= -23) == -17 * 19 * 23 * 29);
     REQUIRE((LongInt(-17 * 19 * 29) *= 23) == -17 * 19 * 23 * 29);
     REQUIRE((LongInt(-17 * 19 * 29) *= -23) == 17 * 19 * 23 * 29);

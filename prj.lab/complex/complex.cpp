@@ -55,11 +55,15 @@ std::ostream& Complex::writeTo(std::ostream& ostrm) const {
 }
 
 std::istream& Complex::readFrom(std::istream& istrm) {
+#pragma warning (push)
+#pragma warning (disable: 4458) //declaration of 'leftBrace' hides class member
     char leftBrace(0);
+    char rightBrace(0);
+#pragma warning (pop)
     double real(0.0);
     char comma(0);
     double imaganary(0.0);
-    char rightBrace(0);
+
     istrm >> leftBrace >> real >> comma >> imaganary >> rightBrace;
     if (istrm.good()) {
         if ((Complex::leftBrace == leftBrace) && (Complex::separator == comma)
