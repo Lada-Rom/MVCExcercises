@@ -22,7 +22,9 @@ public:
 
     explicit operator bool() const { return m_data.back() != 0; }
 
-    LongInt& operator/=(int denom) { DivWithRemainder(denom); return *this; }
+    LongInt& operator+=(int);
+    LongInt& operator*=(int);
+    LongInt& operator/=(int);
 
     friend LongInt operator+(const LongInt&, const LongInt&);
     friend LongInt operator-(const LongInt&, const LongInt&);

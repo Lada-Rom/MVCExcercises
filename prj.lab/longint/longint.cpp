@@ -52,8 +52,7 @@ int LongInt::DivWithRemainder(int denom) {
     return int(q.rem);
 }
 
-std::string LongInt::ToString() const
-{
+std::string LongInt::ToString() const {
     const auto radixDenom = 1000000000;
 
     std::vector<int> vec;
@@ -73,9 +72,42 @@ std::string LongInt::ToString() const
     return output.str();
 }
 
+// LongInt& LongInt::operator+=(int inputValue)
+// {
+//     const int addend = m_isNegative ? -inputValue : inputValue;
+// 
+// 
+// }
+
+LongInt& LongInt::operator*=(int inputValue) {
+
+    m_isNegative = m_isNegative != (inputValue < 0);
+    const uint32_t multiplier = std::abs(inputValue);
+
+    uint64_t carry {};
+
+    for (auto& e : m_data)
+    {
+        carry += e * multiplier;
+        e = UDigit(carry);
+        carry >>= digitBit;
+    }
+    while (carry)
+    {
+        m_data.push_back(UDigit(carry));
+        carry >>= digitBit;
+    }
+    return *this;
+}
+
+LongInt& LongInt::operator/=(int denom) {
+    DivWithRemainder(denom);
+    return *this;
+}
+
 bool operator==(const LongInt& lhs, const LongInt& rhs)
 {
-    return lhs.m_isNegative == rhs.m_isNegative && lhs == rhs;
+    return lhs.m_isNegative == rhs.m_isNegative && lhs.m_data == rhs.m_data;
 }
 
 LongInt operator / (LongInt lhs, int rhs) {
