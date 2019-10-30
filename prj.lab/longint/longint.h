@@ -55,14 +55,6 @@ private:
     bool m_isNegative = false;
 };
 
-LongInt operator+(const LongInt&, const LongInt&);
-LongInt operator-(const LongInt&, const LongInt&);
-LongInt operator*(const LongInt&, const LongInt&);
-
-
-std::ostream& operator<<(std::ostream&, const LongInt&);
-std::istream& operator>>(std::istream&, LongInt&);
-
 } //namespace tolstenko_l_s
 
 #endif
