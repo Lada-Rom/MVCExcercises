@@ -146,4 +146,4 @@ bool operator != (const DynArray<T>& lhs, const DynArray<T>& rhs) {
 
 } //namespace tolstenko_l_s
 
-#endif
+#endif
