@@ -10,6 +10,9 @@
     <Filter Include="longint">
       <UniqueIdentifier>{be9f57f4-6bad-470e-a21b-1916e2b80a52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dynarray">
+      <UniqueIdentifier>{06ab6a1a-511c-4e8f-9086-646a38713616}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="complex\complex.cpp">
@@ -21,6 +24,9 @@
     <ClCompile Include="longint\longint.cpp">
       <Filter>longint</Filter>
     </ClCompile>
+    <ClCompile Include="dynarray\dynarray.cpp">
+      <Filter>dynarray</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex\complex.h">
@@ -31,6 +37,9 @@
     </ClInclude>
     <ClInclude Include="longint\longint.h">
       <Filter>longint</Filter>
+    </ClInclude>
+    <ClInclude Include="dynarray\dynarray.h">
+      <Filter>dynarray</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
