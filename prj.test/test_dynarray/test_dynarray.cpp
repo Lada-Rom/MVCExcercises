@@ -93,3 +93,35 @@ TEST_CASE("DynArray wit complex types test", "[DynArrayComplexTypes]") {
     REQUIRE(ar == Strings{ "one", "two", "three", "four", "", "", "",
     "ten", "ten", "ten", "ten", "ten", "ten", "ten", "ten" });
 }
+
+TEST_CASE("Two-dimensional DynArray test", "[TwoDimensional]") {
+
+    DynArray<DynArray<int>> m {
+        {1, },
+        {10, 11},
+        {20, 21, 22},
+        {30, 31, 32, 33},
+        {40, 41, 42},
+        {50, 51,},
+        {60},
+    };
+    REQUIRE(m[4] == DynArray<int>{40, 41, 42});
+
+    m[4].Resize(5);
+    REQUIRE(m[4] == DynArray<int>{40, 41, 42, 0, 0});
+
+    m.Resize(10, {100, 200, 300});
+    REQUIRE(m == DynArray<DynArray<int>>{
+        {1, },
+        {10, 11},
+        {20, 21, 22},
+        {30, 31, 32, 33},
+        {40, 41, 42, 0, 0},
+        {50, 51},
+        {60},
+        {100, 200, 300},
+        {100, 200, 300},
+        {100, 200, 300}
+    });
+
+}

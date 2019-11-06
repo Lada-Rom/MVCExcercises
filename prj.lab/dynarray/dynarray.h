@@ -135,12 +135,10 @@ void DynArray<T>::Resize(size_t size, const T& value) {
         t.size_ = size_;
         operator=(std::move(t));
     }
-    if (size > size_)
-    {
+    if (size > size_) {
         std::uninitialized_fill(end(), begin() + size, value);
     }
-    else
-    {
+    else {
         std::destroy(begin() + size, end());
     }
     size_ = size;
