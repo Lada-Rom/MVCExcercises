@@ -22,7 +22,7 @@ public:
     DynArray(DynArray&&);
     DynArray(std::initializer_list<T>);
 
-    ~DynArray() { delete [] data_; }
+    ~DynArray();
 
     size_t Size() const { return size_; }
     bool Empty() const { return size_ == 0; }
@@ -42,6 +42,8 @@ public:
     DynArray& operator = (DynArray&&);
 
 private:
+    static T* allocate(size_t);
+
     size_t capacity_{0};
     size_t size_{0};
     T* data_{nullptr};
@@ -56,23 +58,27 @@ bool operator != (const DynArray<T>&, const DynArray<T>&);
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename T>
+T* DynArray<T>::allocate(size_t size)
+{
+    return static_cast<T*>(std::malloc(size * sizeof(T)));
+}
+
+template<typename T>
 DynArray<T>::DynArray(size_t size, const T& value) 
     : size_(size)
     , capacity_(size)
-    , data_(new T[size]) {
+    , data_(allocate(size)) {
 
-    for (size_t i = 0; i < size_; ++i) {
-        data_[i] = value;
-    }
+    std::uninitialized_fill(begin(), end(), value);
 }
 
 template<typename T>
 DynArray<T>::DynArray(const DynArray& other)
     : size_(other.size_)
     , capacity_(other.size_)
-    , data_(new T[other.size_]) {
+    , data_(allocate(other.size_)) {
 
-    std::copy(other.begin(), other.end(), data_);
+    std::uninitialized_copy(other.begin(), other.end(), data_);
 }
 
 template<typename T>
@@ -90,9 +96,15 @@ template<typename T>
 DynArray<T>::DynArray(std::initializer_list<T> list)
     : size_(list.size())
     , capacity_(list.size())
-    , data_(new T[list.size()]) {
+    , data_(allocate(list.size())) {
 
-    std::copy(list.begin(), list.end(), data_);
+    std::uninitialized_copy(list.begin(), list.end(), data_);
+}
+
+template<typename T>
+DynArray<T>::~DynArray() {
+    std::destroy(begin(), end());
+    std::free(data_);
 }
 
 template<typename T>
@@ -116,12 +128,20 @@ DynArray<T>& DynArray<T>::operator =(DynArray&& other) {
 template<typename T>
 void DynArray<T>::Resize(size_t size, const T& value) {
     if(capacity_ <= size) {
-        DynArray t(size, value);
-        std::copy(begin(), end(), t.data_);
-        operator = (std::move(t));
+        DynArray t;
+        t.data_ = allocate(size);
+        t.capacity_ = size;
+        std::uninitialized_move(begin(), end(), t.data_);
+        t.size_ = size_;
+        operator=(std::move(t));
     }
-    else if(size > size_) {
-        std::fill(data_ + size_, data_ + size, value);
+    if (size > size_)
+    {
+        std::uninitialized_fill(end(), begin() + size, value);
+    }
+    else
+    {
+        std::destroy(begin() + size, end());
     }
     size_ = size;
 }
