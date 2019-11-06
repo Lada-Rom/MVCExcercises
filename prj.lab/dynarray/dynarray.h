@@ -106,10 +106,9 @@ DynArray<T>& DynArray<T>::operator =(const DynArray& other) {
 template<typename T>
 DynArray<T>& DynArray<T>::operator =(DynArray&& other) {
     if (&other != this) {
-        DynArray t(other);
-        std::swap(size_, t.size_);
-        std::swap(capacity_, t.capacity_);
-        std::swap(data_, t.data_);
+        std::swap(size_, other.size_);
+        std::swap(capacity_, other.capacity_);
+        std::swap(data_, other.data_);
     }
     return *this;
 }
