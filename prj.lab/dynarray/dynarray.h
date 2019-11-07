@@ -24,8 +24,8 @@ public:
 
     ~DynArray();
 
-    size_t Size() const { return size_; }
-    bool Empty() const { return size_ == 0; }
+    size_t size() const { return size_; }
+    bool empty() const { return size_ == 0; }
 
     iterator begin() { return data_; }
     const_iterator begin() const { return data_; }
@@ -33,10 +33,10 @@ public:
     iterator end() { return data_ + size_; }
     const_iterator end() const { return data_ + size_; }
 
-    void Resize (size_t, const T& = T());
+    void resize (size_t, const T& = T());
 
-    T& operator [] (size_t i) { return data_[i]; }
-    const T& operator [] (size_t i) const { return data_[i]; }
+    T& operator [] (size_t);
+    const T& operator [] (size_t) const;
 
     DynArray& operator = (const DynArray&);
     DynArray& operator = (DynArray&&);
@@ -108,6 +108,20 @@ DynArray<T>::~DynArray() {
 }
 
 template<typename T>
+T& DynArray<T>::operator [] (size_t i) {
+    if(i >= size_)
+        throw std::out_of_range("Array's index is out of range");
+    return data_[i];
+}
+
+template<typename T>
+const T& DynArray<T>::operator [] (size_t i) const {
+    if (i >= size_)
+        throw std::out_of_range("Array's index is out of range");
+    return data_[i];
+}
+
+template<typename T>
 DynArray<T>& DynArray<T>::operator =(const DynArray& other) {
     if (&other != this) {
         *this = DynArray(other);
@@ -126,7 +140,7 @@ DynArray<T>& DynArray<T>::operator =(DynArray&& other) {
 }
 
 template<typename T>
-void DynArray<T>::Resize(size_t size, const T& value) {
+void DynArray<T>::resize(size_t size, const T& value) {
     if(capacity_ <= size) {
         DynArray t;
         t.data_ = allocate(size);
@@ -146,10 +160,10 @@ void DynArray<T>::Resize(size_t size, const T& value) {
 
 template<typename T>
 bool operator == (const DynArray<T>& lhs, const DynArray<T>& rhs) {
-    if (lhs.Size() != rhs.Size())
+    if (lhs.size() != rhs.size())
         return false;
 
-    for (size_t i = 0; i < lhs.Size(); ++i) {
+    for (size_t i = 0; i < lhs.size(); ++i) {
         if (lhs[i] != rhs[i])
             return false;
     }
@@ -163,5 +177,7 @@ bool operator != (const DynArray<T>& lhs, const DynArray<T>& rhs) {
 }
 
 } //namespace tolstenko_l_s
+
+using DynArray = tolstenko_l_s::DynArray<float>;
 
 #endif

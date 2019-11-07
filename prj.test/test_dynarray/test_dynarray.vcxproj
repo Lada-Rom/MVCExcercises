@@ -148,7 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="test_dynarray.cpp" />
+    <ClCompile Include="catch2_dynarray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\prj.lab\prj.lab.vcxproj">
