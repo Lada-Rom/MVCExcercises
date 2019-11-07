@@ -97,6 +97,23 @@ Complex& Complex::operator/=(const double rhs) {
     return *this = *this / rhs;
 }
 
+namespace {
+
+bool epsilon_less(double lhs, double rhs) {
+    constexpr const auto epsilon = std::numeric_limits<double>::epsilon();
+    return lhs < rhs * (1 + epsilon) && lhs * (1 + epsilon) < rhs;
+}
+
+bool epsilon_equal(double lhs, double rhs) {
+    return !(epsilon_less(lhs, rhs) || epsilon_less(rhs, lhs));
+}
+
+} // namespace
+
+bool Complex::operator == (const Complex& rhs) const {
+    return epsilon_equal(re, rhs.re) && epsilon_equal(im, rhs.im);
+}
+
 std::ostream& Complex::writeTo(std::ostream& ostrm) const {
     ostrm << leftBrace << re << separator << " " << im << rightBrace;
     return ostrm;

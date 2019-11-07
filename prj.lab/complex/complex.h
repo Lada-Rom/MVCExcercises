@@ -9,9 +9,7 @@ struct Complex {
     Complex() {}
     explicit Complex(const double real);
     Complex(const double real, const double imaginary);
-    bool operator==(const Complex& rhs) const {
-        return (re == rhs.re) && (im == rhs.im);
-    }
+    bool operator==(const Complex&) const;
 
     bool operator!=(const Complex& rhs) const { return !operator==(rhs); }
     Complex& operator+=(const Complex& rhs);
