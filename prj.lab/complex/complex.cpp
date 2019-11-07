@@ -30,13 +30,53 @@ Complex operator+(const Complex& lhs, const Complex& rhs) {
     return sum;
 }
 
+Complex operator+(const Complex& lhs, const double rhs) {
+    return lhs + Complex(rhs);
+}
+
+Complex operator+(const double lhs, const Complex& rhs) {
+    return Complex(lhs) + rhs;
+}
+
 Complex operator-(const Complex& lhs, const Complex& rhs) {
     return Complex(lhs.re - rhs.re, lhs.im - rhs.im);
+}
+
+Complex operator-(const Complex& lhs, const double rhs) {
+    return lhs - Complex(rhs);
+}
+
+Complex operator-(const double lhs, const Complex& rhs) {
+    return Complex(lhs) - rhs;
 }
 
 Complex operator*(const Complex& lhs, const Complex& rhs) {
     return Complex(lhs.re * rhs.re - lhs.im * rhs.im,
         rhs.re * lhs.im + lhs.re * rhs.im);
+}
+
+Complex operator*(const Complex& lhs, const double rhs) {
+    return { lhs.re * rhs, lhs.im * rhs };
+}
+
+Complex operator*(const double lhs, const Complex& rhs) {
+    return Complex(lhs) * rhs;
+}
+
+Complex operator/(const Complex& lhs, const Complex& rhs) {
+    const auto denom = rhs.re * rhs.re + rhs.im * rhs.im;
+    return { 
+        (lhs.re * rhs.re + lhs.im * rhs.im) / denom,
+        (lhs.im * rhs.re - lhs.re * rhs.im) / denom
+    };
+}
+
+Complex operator/(const Complex& lhs, const double rhs) {
+    return {lhs.re / rhs, lhs.im / rhs };
+}
+
+Complex operator/(const double lhs, const Complex& rhs) {
+    return Complex(lhs) / rhs;
 }
 
 Complex& Complex::operator*=(const Complex& rhs) {
@@ -47,6 +87,14 @@ Complex& Complex::operator*=(const double rhs) {
     re *= rhs;
     im *= rhs;
     return *this;
+}
+
+Complex& Complex::operator/=(const Complex& rhs) {
+    return *this = *this / rhs;
+}
+
+Complex& Complex::operator/=(const double rhs) {
+    return *this = *this / rhs;
 }
 
 std::ostream& Complex::writeTo(std::ostream& ostrm) const {
