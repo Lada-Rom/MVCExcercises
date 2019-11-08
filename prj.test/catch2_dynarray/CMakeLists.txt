@@ -1,5 +1,5 @@
-add_executable(catch2_complex catch2_complex.cpp)
-target_link_libraries(catch2_complex complex)
+add_executable(catch2_dynarray catch2_dynarray.cpp)
+target_link_libraries(catch2_dynarray dynarray)
 include(CTest)
 include(Catch)
-catch_discover_tests(catch2_complex)
+catch_discover_tests(catch2_dynarray)

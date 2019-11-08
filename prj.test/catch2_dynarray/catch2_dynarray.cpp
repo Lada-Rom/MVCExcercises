@@ -9,7 +9,7 @@ constexpr std::ptrdiff_t big_size = std::ptrdiff_t(std::numeric_limits<int>::max
 TEST_CASE("DynArray ctor", "[dynarray]") {
     CHECK(0 == DynArray().size());
     CHECK(15 == DynArray(15).size());
-    //CHECK(big_size == DynArray(big_size).size());
+    CHECK(big_size == DynArray(big_size).size());
 
     DynArray ar(10);
     CHECK(ar[0] == Approx(0.0f));
