@@ -1,36 +1,54 @@
 #include "rational.h"
 
-Rational::Rational(int num, int denom) : numerator(num), denominator(denom) {
+Rational::Rational(int num, int denom) : num_(num), denom_(denom) {
     if (denom == 0) {
         throw std::invalid_argument("Zero denominator");
     }
 }
 
+Rational Rational::parse(const std::string& str) {
+    const auto slash_pos = str.find_first_not_of("-0123456789");
+
+    if(slash_pos == std::string::npos || str[slash_pos] != '/')
+        throw std::invalid_argument("Invalid Rational format: " + str);
+
+    const auto parse_number = [](const std::string& str) {
+        std::istringstream input(str);
+        int value{};
+        input >> value;
+        return value;
+    };
+
+    const auto num = parse_number(str.substr(0, slash_pos));
+    const auto end_pos = str.find_first_not_of("0123456789", slash_pos + 1);
+
+    if (end_pos != std::string::npos)
+        throw std::invalid_argument("Invalid Rational format: " + str);
+
+    const auto denom = parse_number(str.substr(slash_pos + 1));
+
+    return reduce(num, denom);
+}
+
 std::ostream& operator << (std::ostream& ostrm, const Rational& f) {
-    ostrm << f.num();
-    if (f.denom() != 1) {
-        ostrm << '/' << f.denom();
-    }
-    return ostrm;
+    return ostrm << f.num() << '/' << f.denom();
 }
 
 std::istream& operator >> (std::istream& istrm, Rational& f) {
-    int numenator = 0;
-    int denominator = 1;
-
-    if (istrm >> numenator) {
-        char symbol = 0;
-        if (istrm >> symbol) {
-            if (symbol == '/') {
-                istrm >> denominator;
-            }
-            else {
-                istrm.unget();
-            }
+    try {
+        std::string str;
+        if (istrm >> str) {
+            f = Rational::parse(str);
         }
     }
-    f = reduce(numenator, denominator);
+    catch(const std::invalid_argument&) {
+        istrm.setstate(std::ios_base::failbit);
+    }
     return istrm;
+}
+
+Rational Rational::operator - () const {
+    return reduce(-num_, denom_);
 }
 
 Rational operator + (const Rational& x, const Rational& y) {

@@ -148,7 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="test_rational.cpp" />
+    <ClCompile Include="catch2_rational.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\prj.lab\prj.lab.vcxproj">
