@@ -11,18 +11,23 @@ class Rational {
 public:
     Rational() = default;
     Rational(int num, int denom);
+    explicit Rational(int num) : Rational(num, 1) {}
 
-    int num() const { return numerator; }
-    int denom() const { return denominator; }
+    int num() const { return num_; }
+    int denom() const { return denom_; }
+
+    Rational operator - () const;
 
     Rational& operator += (const Rational&);
     Rational& operator -= (const Rational&);
     Rational& operator *= (const Rational&);
     Rational& operator /= (const Rational&);
 
+    static Rational parse (const std::string&);
+
 private:
-    int numerator{ 0 };
-    int denominator{ 1 };
+    int num_{ 0 };
+    int denom_{ 1 };
 };
 
 std::ostream& operator << (std::ostream&, const Rational&);

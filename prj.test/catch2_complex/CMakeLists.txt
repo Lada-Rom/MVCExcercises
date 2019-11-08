@@ -1,0 +1,5 @@
+add_executable(catch2_complex catch2_complex.cpp)
+target_link_libraries(catch2_complex complex)
+include(CTest)
+include(Catch)
+catch_discover_tests(catch2_complex)

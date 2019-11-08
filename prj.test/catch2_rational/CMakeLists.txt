@@ -1,0 +1,5 @@
+add_executable(catch2_rational catch2_rational.cpp)
+target_link_libraries(catch2_rational rational)
+include(CTest)
+include(Catch)
+catch_discover_tests(catch2_rational)

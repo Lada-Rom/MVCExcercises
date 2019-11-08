@@ -1,0 +1,5 @@
+add_executable(catch2_longint catch2_longint.cpp)
+target_link_libraries(catch2_longint longint)
+include(CTest)
+include(Catch)
+catch_discover_tests(catch2_longint)
