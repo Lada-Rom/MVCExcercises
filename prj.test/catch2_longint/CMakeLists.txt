@@ -1,3 +1,5 @@
-add_executable(test_longint test_longint.cpp)
-target_link_libraries(test_longint longint)
-set_property(TARGET test_longint PROPERTY CXX_STANDARD 17)
+add_executable(catch2_longint catch2_longint.cpp)
+target_link_libraries(catch2_longint longint)
+include(CTest)
+include(Catch)
+catch_discover_tests(catch2_longint)

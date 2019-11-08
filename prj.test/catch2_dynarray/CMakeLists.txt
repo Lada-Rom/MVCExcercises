@@ -1,3 +1,5 @@
-add_executable(test_dynarray test_dynarray.cpp)
-target_link_libraries(test_dynarray dynarray)
-set_property(TARGET test_dynarray PROPERTY CXX_STANDARD 11)
+add_executable(catch2_complex catch2_complex.cpp)
+target_link_libraries(catch2_complex complex)
+include(CTest)
+include(Catch)
+catch_discover_tests(catch2_complex)

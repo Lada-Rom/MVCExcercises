@@ -1,3 +1,5 @@
-add_executable(test_complex test_complex.cpp)
-target_link_libraries(test_complex complex)
-set_property(TARGET test_complex PROPERTY CXX_STANDARD 11)
+add_executable(catch2_complex catch2_complex.cpp)
+target_link_libraries(catch2_complex complex)
+include(CTest)
+include(Catch)
+catch_discover_tests(catch2_complex)
