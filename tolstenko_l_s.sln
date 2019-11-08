@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 12.0.40629.0
+VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prj.lab", "prj.lab\prj.lab.vcxproj", "{099F0903-3D90-43CD-BF71-453B3FB57F91}"
 EndProject
@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prj.thirdparty", "prj.third
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "catch2", "catch2", "{BC908D16-2D36-4B00-B737-D2320EB881F2}"
 	ProjectSection(SolutionItems) = preProject
-		prj.thirdparty\catch2\catch.h = prj.thirdparty\catch2\catch.h
+		prj.thirdparty\catch2\catch.hpp = prj.thirdparty\catch2\catch.hpp
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_dynarray", "prj.test\test_dynarray\test_dynarray.vcxproj", "{32F0D67C-49E7-45D3-97F5-91D26245CC10}"
@@ -82,5 +82,6 @@ Global
 		{32F0D67C-49E7-45D3-97F5-91D26245CC10} = {1D4AA145-AFE3-42C8-9B0D-B6C74038F72F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A2A610D8-7622-4F0D-BD6B-0270DC4B925C}
 	EndGlobalSection
 EndGlobal

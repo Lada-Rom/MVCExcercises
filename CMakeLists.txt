@@ -24,8 +24,6 @@ set(CMAKE_MODULE_PATH
 
 project(tolstenko_l_s)
 
-include(cmake/build_prefix.cmake)
-
 include_directories(prj.lab prj.thirdparty)
 
 add_subdirectory(prj.lab)
