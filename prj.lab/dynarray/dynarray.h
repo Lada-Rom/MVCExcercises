@@ -43,6 +43,10 @@ public:
 
 private:
     static T* allocate(size_t);
+    void construct_fill(const T&, size_t);
+    void construct_copy(const T* begin, const T* end);
+    void construct_move(T* begin, T* end);
+    void destroy(size_t);
 
     size_t capacity_{0};
     size_t size_{0};
@@ -58,27 +62,90 @@ bool operator != (const DynArray<T>&, const DynArray<T>&);
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename T>
-T* DynArray<T>::allocate(size_t size)
-{
+T* DynArray<T>::allocate(size_t size) {
+
     return static_cast<T*>(std::malloc(size * sizeof(T)));
 }
 
 template<typename T>
+void DynArray<T>::construct_fill(const T& value, size_t count) {
+
+    assert(size_ + count <= capacity_);
+
+    for (; count; --count) {
+        new(end()) T(value);
+        ++size_;
+    }
+}
+
+template<typename T>
+void DynArray<T>::construct_copy(const T* inputBegin, const T* inputEnd) {
+
+    for (const T* p = inputBegin; p != inputEnd; ++p) {
+        assert(size_ < capacity_);
+        new(end()) T(*p);
+        ++size_;
+    }
+}
+
+template<typename T>
+void DynArray<T>::construct_move(T* inputBegin, T* inputEnd) {
+
+    for (T* p = inputBegin; p != inputEnd; ++p) {
+        assert(size_ < capacity_);
+        new(end()) T(std::move(*p));
+        ++size_;
+    }
+}
+
+template<typename T>
+void DynArray<T>::destroy(size_t count) {
+    assert(count <= size_);
+    for (; count; --count) {
+        (end() - 1)->~T();
+        --size_;
+    }
+}
+
+template<typename T>
 DynArray<T>::DynArray(size_t size, const T& value) 
-    : size_(size)
-    , capacity_(size)
+    : capacity_(size)
     , data_(allocate(size)) {
 
-    std::uninitialized_fill(begin(), end(), value);
+    try {
+        construct_fill(value, size);
+    } catch (...) {
+        DynArray::~DynArray();
+        throw;
+    }
 }
 
 template<typename T>
 DynArray<T>::DynArray(const DynArray& other)
-    : size_(other.size_)
-    , capacity_(other.size_)
+    : capacity_(other.size_)
     , data_(allocate(other.size_)) {
 
-    std::uninitialized_copy(other.begin(), other.end(), data_);
+    try {
+        construct_copy(other.begin(), other.end());
+    }
+    catch (...) {
+        DynArray::~DynArray();
+        throw;
+    }
+}
+
+template<typename T>
+DynArray<T>::DynArray(std::initializer_list<T> list)
+    : capacity_(list.size())
+    , data_(allocate(list.size())) {
+
+    try {
+        construct_copy(list.begin(), list.end());
+    }
+    catch (...) {
+        DynArray::~DynArray();
+        throw;
+    }
 }
 
 template<typename T>
@@ -93,17 +160,8 @@ DynArray<T>::DynArray(DynArray&& other)
 }
 
 template<typename T>
-DynArray<T>::DynArray(std::initializer_list<T> list)
-    : size_(list.size())
-    , capacity_(list.size())
-    , data_(allocate(list.size())) {
-
-    std::uninitialized_copy(list.begin(), list.end(), data_);
-}
-
-template<typename T>
 DynArray<T>::~DynArray() {
-    std::destroy(begin(), end());
+    destroy(size_);
     std::free(data_);
 }
 
@@ -145,15 +203,15 @@ void DynArray<T>::resize(size_t size, const T& value) {
         DynArray t;
         t.data_ = allocate(size);
         t.capacity_ = size;
-        std::uninitialized_move(begin(), end(), t.data_);
+        t.construct_move(begin(), end());
         t.size_ = size_;
         operator=(std::move(t));
     }
     if (size > size_) {
-        std::uninitialized_fill(end(), begin() + size, value);
+        construct_fill(value, size - size_);
     }
     else {
-        std::destroy(begin() + size, end());
+        destroy(size_ - size);
     }
     size_ = size;
 }

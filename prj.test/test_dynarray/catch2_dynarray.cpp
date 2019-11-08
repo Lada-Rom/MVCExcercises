@@ -16,8 +16,6 @@ TEST_CASE("DynArray ctor", "[dynarray]") {
     CHECK(ar[ar.size() - 1] == Approx(0.0f));
 }
 
-#if 1
-
 TEST_CASE("DynArray copy ctor", "[dynarray]") {
     DynArray ar(10);
     for (int i(0); i < ar.size(); i += 1) {
@@ -102,4 +100,3 @@ TEST_CASE("DynArray resize()", "[dynarray]") {
     }
 }
 
-#endif
