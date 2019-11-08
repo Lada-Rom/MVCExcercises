@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0614CC45-70F5-4AD7-B711-391E344E26A9}</ProjectGuid>
+    <ProjectGuid>{6609C510-D6A2-4AB7-AFA6-35A0FC8EE0D4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>test_complex</RootNamespace>
+    <RootNamespace>catch2_longint</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -148,7 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="catch2_complex.cpp" />
+    <ClCompile Include="catch2_longint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\prj.lab\prj.lab.vcxproj">
