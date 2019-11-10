@@ -18,11 +18,11 @@ public:
 
     DynArray() = default;
     DynArray(size_t, const T& = T());
-    DynArray(const DynArray&);
-    DynArray(DynArray&&);
-    DynArray(std::initializer_list<T>);
+    DynArray(const DynArray& other) : DynArray(other, other.size()) { }
+    DynArray(DynArray&& other) { swap(other); };
+    DynArray(std::initializer_list<T> list) : DynArray(list, list.size()) { }
 
-    ~DynArray();
+    ~DynArray() { std::destroy(begin(), end()); }
 
     size_t size() const { return size_; }
     bool empty() const { return size_ == 0; }
@@ -101,14 +101,6 @@ DynArray<T>::DynArray(size_t size, const T& value)
 }
 
 template<typename T>
-DynArray<T>::DynArray(const DynArray& other)
-    : DynArray(other, other.size()) {}
-
-template<typename T>
-DynArray<T>::DynArray(std::initializer_list<T> list)
-    : DynArray(list, list.size()){}
-
-template<typename T>
 template <typename Range>
 DynArray<T>::DynArray(const Range& range, size_t capacity)
     : size_(std::size(range))
@@ -117,16 +109,6 @@ DynArray<T>::DynArray(const Range& range, size_t capacity)
 
     assert(size_ <= capacity_);
     std::uninitialized_copy(std::begin(range), std::end(range), begin());
-}
-
-template<typename T>
-DynArray<T>::DynArray(DynArray&& other) {
-    swap(other);
-}
-
-template<typename T>
-DynArray<T>::~DynArray() {
-    std::destroy(begin(), end());
 }
 
 template<typename T>
