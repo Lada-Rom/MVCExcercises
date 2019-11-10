@@ -19,30 +19,30 @@ public:
     DynArray() = default;
     DynArray(size_t, const T& = T());
     DynArray(const DynArray& other) : DynArray(other, other.size()) { }
-    DynArray(DynArray&& other) { swap(other); };
+    DynArray(DynArray&& other) noexcept { swap(other); };
     DynArray(std::initializer_list<T> list) : DynArray(list, list.size()) { }
 
     ~DynArray() { std::destroy(begin(), end()); }
 
-    size_t size() const { return size_; }
-    bool empty() const { return size_ == 0; }
+    size_t size() const noexcept { return size_; }
+    bool empty() const noexcept { return size_ == 0; }
 
-    iterator begin() { return data_.get(); }
-    const_iterator begin() const { return data_.get(); }
+    iterator begin() noexcept { return data_.get(); }
+    const_iterator begin() const noexcept { return data_.get(); }
 
-    iterator end() { return data_.get() + size_; }
-    const_iterator end() const { return data_.get() + size_; }
+    iterator end() noexcept { return data_.get() + size_; }
+    const_iterator end() const noexcept { return data_.get() + size_; }
 
     void reserve(size_t);
     void resize(size_t, const T& = T());
 
-    void swap(DynArray&);
+    void swap(DynArray&) noexcept;
 
     T& operator [] (size_t);
     const T& operator [] (size_t) const;
 
     DynArray& operator = (const DynArray&);
-    DynArray& operator = (DynArray&&);
+    DynArray& operator = (DynArray&&) noexcept;
 
 private:
     struct Deallocator{ void operator()(T* p) const { std::free(p); } };
@@ -59,7 +59,7 @@ private:
 };
 
 template <typename T>
-void swap(DynArray<T>& lhs, DynArray<T>& rhs) { lhs.swap(rhs); }
+void swap(DynArray<T>& lhs, DynArray<T>& rhs) noexcept { lhs.swap(rhs); }
 
 template<typename T>
 bool operator == (const DynArray<T>&, const DynArray<T>&);
@@ -85,10 +85,12 @@ typename DynArray<T>::StorageKeeper DynArray<T>::allocate(size_t size) {
 }
 
 template<typename T>
-void DynArray<T>::swap(DynArray<T>& rhs) {
-    std::swap(size_, rhs.size_);
-    std::swap(capacity_, rhs.capacity_);
-    std::swap(data_, rhs.data_);
+void DynArray<T>::swap(DynArray<T>& rhs) noexcept {
+    if (this != &rhs) {
+        std::swap(size_, rhs.size_);
+        std::swap(capacity_, rhs.capacity_);
+        std::swap(data_, rhs.data_);
+    }
 }
 
 template<typename T>
@@ -134,10 +136,8 @@ DynArray<T>& DynArray<T>::operator =(const DynArray& other) {
 }
 
 template<typename T>
-DynArray<T>& DynArray<T>::operator =(DynArray&& other) {
-    if (&other != this) {
-        swap(other);
-    }
+DynArray<T>& DynArray<T>::operator =(DynArray&& other) noexcept {
+    swap(other);
     return *this;
 }
 
