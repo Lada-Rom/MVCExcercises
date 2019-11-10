@@ -99,4 +99,3 @@ TEST_CASE("DynArray resize()", "[dynarray]") {
         CHECK(ar[i] == 0.0f);
     }
 }
-

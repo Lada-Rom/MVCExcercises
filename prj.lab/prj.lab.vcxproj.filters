@@ -13,6 +13,9 @@
     <Filter Include="dynarray">
       <UniqueIdentifier>{06ab6a1a-511c-4e8f-9086-646a38713616}</UniqueIdentifier>
     </Filter>
+    <Filter Include="matrixa">
+      <UniqueIdentifier>{a03ca75c-91fb-42a2-81c2-f3c35fbf4b67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="complex\complex.cpp">
@@ -27,6 +30,9 @@
     <ClCompile Include="dynarray\dynarray.cpp">
       <Filter>dynarray</Filter>
     </ClCompile>
+    <ClCompile Include="matrixa\matrixa.cpp">
+      <Filter>matrixa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex\complex.h">
@@ -40,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="dynarray\dynarray.h">
       <Filter>dynarray</Filter>
+    </ClInclude>
+    <ClInclude Include="matrixa\matrixa.h">
+      <Filter>matrixa</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

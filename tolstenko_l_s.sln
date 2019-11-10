@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "catch2", "catch2", "{BC908D
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "catch2_dynarray", "prj.test\catch2_dynarray\catch2_dynarray.vcxproj", "{32F0D67C-49E7-45D3-97F5-91D26245CC10}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "catch2_matrixa", "prj.test\catch2_matrixa\catch2_matrixa.vcxproj", "{88DD59CB-4202-4172-BEE7-4B0653EAAAA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -70,6 +72,14 @@ Global
 		{32F0D67C-49E7-45D3-97F5-91D26245CC10}.Release|Win32.Build.0 = Release|Win32
 		{32F0D67C-49E7-45D3-97F5-91D26245CC10}.Release|x64.ActiveCfg = Release|x64
 		{32F0D67C-49E7-45D3-97F5-91D26245CC10}.Release|x64.Build.0 = Release|x64
+		{88DD59CB-4202-4172-BEE7-4B0653EAAAA6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{88DD59CB-4202-4172-BEE7-4B0653EAAAA6}.Debug|Win32.Build.0 = Debug|Win32
+		{88DD59CB-4202-4172-BEE7-4B0653EAAAA6}.Debug|x64.ActiveCfg = Debug|x64
+		{88DD59CB-4202-4172-BEE7-4B0653EAAAA6}.Debug|x64.Build.0 = Debug|x64
+		{88DD59CB-4202-4172-BEE7-4B0653EAAAA6}.Release|Win32.ActiveCfg = Release|Win32
+		{88DD59CB-4202-4172-BEE7-4B0653EAAAA6}.Release|Win32.Build.0 = Release|Win32
+		{88DD59CB-4202-4172-BEE7-4B0653EAAAA6}.Release|x64.ActiveCfg = Release|x64
+		{88DD59CB-4202-4172-BEE7-4B0653EAAAA6}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +90,7 @@ Global
 		{6609C510-D6A2-4AB7-AFA6-35A0FC8EE0D4} = {1D4AA145-AFE3-42C8-9B0D-B6C74038F72F}
 		{BC908D16-2D36-4B00-B737-D2320EB881F2} = {783ED656-81FD-4316-B8BE-A98C0BBB2F49}
 		{32F0D67C-49E7-45D3-97F5-91D26245CC10} = {1D4AA145-AFE3-42C8-9B0D-B6C74038F72F}
+		{88DD59CB-4202-4172-BEE7-4B0653EAAAA6} = {1D4AA145-AFE3-42C8-9B0D-B6C74038F72F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2A610D8-7622-4F0D-BD6B-0270DC4B925C}
