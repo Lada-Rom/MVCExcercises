@@ -75,6 +75,8 @@ using tolstenko_l_s::swap;
 
 } // namespace std
 
+using DynArray = tolstenko_l_s::DynArray<float>;
+
 ////////////////////////////////////////////////////////////////////////////////
 namespace tolstenko_l_s {
 
@@ -179,7 +181,5 @@ bool operator != (const DynArray<T>& lhs, const DynArray<T>& rhs) {
 }
 
 } //namespace tolstenko_l_s
-
-using DynArray = tolstenko_l_s::DynArray<float>;
 
 #endif
