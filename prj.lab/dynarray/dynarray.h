@@ -42,7 +42,7 @@ public:
     const T& operator [] (size_t) const;
 
     DynArray& operator = (const DynArray&);
-    DynArray& operator = (DynArray&&) noexcept;
+    DynArray& operator = (DynArray&& rhs) noexcept { swap(rhs); return *this; }
 
 private:
     struct Deallocator{ void operator()(T* p) const { std::free(p); } };
@@ -134,12 +134,6 @@ DynArray<T>& DynArray<T>::operator =(const DynArray& other) {
     if (&other != this) {
         *this = DynArray(other);
     }
-    return *this;
-}
-
-template<typename T>
-DynArray<T>& DynArray<T>::operator =(DynArray&& other) noexcept {
-    swap(other);
     return *this;
 }
 
