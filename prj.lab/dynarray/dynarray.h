@@ -36,6 +36,8 @@ public:
     void reserve(size_t);
     void resize(size_t, const T& = T());
 
+    void swap(DynArray&);
+
     T& operator [] (size_t);
     const T& operator [] (size_t) const;
 
@@ -48,10 +50,16 @@ private:
 
     static StorageKeeper allocate(size_t);
 
+    template <typename Range>
+    DynArray(const Range&, size_t capacity);
+
     size_t capacity_{0};
     size_t size_{0};
     StorageKeeper data_;
 };
+
+template <typename T>
+void swap(DynArray<T>& lhs, DynArray<T>& rhs) { lhs.swap(rhs); }
 
 template<typename T>
 bool operator == (const DynArray<T>&, const DynArray<T>&);
@@ -59,12 +67,28 @@ bool operator == (const DynArray<T>&, const DynArray<T>&);
 template<typename T>
 bool operator != (const DynArray<T>&, const DynArray<T>&);
 
+} // namespace tolstenko_l_s
+
+namespace std {
+
+using tolstenko_l_s::swap;
+
+} // namespace std
+
 ////////////////////////////////////////////////////////////////////////////////
+namespace tolstenko_l_s {
 
 template<typename T>
 typename DynArray<T>::StorageKeeper DynArray<T>::allocate(size_t size) {
 
     return StorageKeeper(static_cast<T*>(std::malloc(size * sizeof(T))));
+}
+
+template<typename T>
+void DynArray<T>::swap(DynArray<T>& rhs) {
+    std::swap(size_, rhs.size_);
+    std::swap(capacity_, rhs.capacity_);
+    std::swap(data_, rhs.data_);
 }
 
 template<typename T>
@@ -78,31 +102,26 @@ DynArray<T>::DynArray(size_t size, const T& value)
 
 template<typename T>
 DynArray<T>::DynArray(const DynArray& other)
-    : size_(other.size_)
-    , capacity_(other.size_)
-    , data_(allocate(other.size_)) {
-
-    std::uninitialized_copy(other.begin(), other.end(), begin());
-}
+    : DynArray(other, other.size()) {}
 
 template<typename T>
 DynArray<T>::DynArray(std::initializer_list<T> list)
-    : size_(list.size())
-    , capacity_(list.size())
-    , data_(allocate(list.size())) {
+    : DynArray(list, list.size()){}
 
-    std::uninitialized_copy(list.begin(), list.end(), begin());
+template<typename T>
+template <typename Range>
+DynArray<T>::DynArray(const Range& range, size_t capacity)
+    : size_(std::size(range))
+    , capacity_(capacity)
+    , data_(allocate(capacity)) {
+
+    assert(size_ <= capacity_);
+    std::uninitialized_copy(std::begin(range), std::end(range), begin());
 }
 
 template<typename T>
-DynArray<T>::DynArray(DynArray&& other)
-    : size_(other.size_)
-    , capacity_(other.size_)
-    , data_(other.data_) {
-
-    other.size_ = 0;
-    other.capacity_ = 0;
-    other.data_ = nullptr;
+DynArray<T>::DynArray(DynArray&& other) {
+    swap(other);
 }
 
 template<typename T>
@@ -135,9 +154,7 @@ DynArray<T>& DynArray<T>::operator =(const DynArray& other) {
 template<typename T>
 DynArray<T>& DynArray<T>::operator =(DynArray&& other) {
     if (&other != this) {
-        std::swap(size_, other.size_);
-        std::swap(capacity_, other.capacity_);
-        std::swap(data_, other.data_);
+        swap(other);
     }
     return *this;
 }
@@ -145,10 +162,7 @@ DynArray<T>& DynArray<T>::operator =(DynArray&& other) {
 template<typename T>
 void DynArray<T>::reserve(size_t size) {
     if (capacity_ <= size) {
-        StorageKeeper data = allocate(size);
-        std::uninitialized_move(begin(), end(), data.get());
-        data_ = std::move(data);
-        capacity_ = size;
+        *this = DynArray(*this, size);
     }
 }
 
