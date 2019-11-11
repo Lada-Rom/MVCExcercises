@@ -35,4 +35,24 @@ MatrixA::MatrixA(const MatrixA& rhs)
 MatrixA::MatrixA(const std::ptrdiff_t col, const std::ptrdiff_t row)
     : n_col_(col)
     , n_row_(row)
-    , data_(allocate(col, row)) {}
+    , data_(allocate(col, row)) {
+
+    for(std::ptrdiff_t i(0); i < (n_col_ * n_row_); i += 1)
+        data_[i] = 0;
+}
+
+float& MatrixA::at(const std::ptrdiff_t row_i, const std::ptrdiff_t col_i) {
+    if(row_i < 0 || col_i < 0 || row_i == row_count() || col_i == col_count())
+        throw std::out_of_range("Index is out of range");
+    else
+        return data_[n_col_ * row_i + col_i];
+}
+
+const float& MatrixA::at(
+    const std::ptrdiff_t row_i, const std::ptrdiff_t col_i) const {
+
+    if (row_i < 0 || col_i < 0 || row_i == row_count() || col_i == col_count())
+        throw std::out_of_range("Index is out of range");
+    else
+        return data_[n_col_ * row_i + col_i];
+}

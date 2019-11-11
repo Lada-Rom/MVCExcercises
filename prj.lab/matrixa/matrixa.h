@@ -24,8 +24,8 @@ public:
 
     void swap(MatrixA&);
 
-//    float& at(const std::ptrdiff_t row_i, const std::ptrdiff_t col_i);
-//    const float& at(const std::ptrdiff_t row_i, const std::ptrdiff_t col_i) const;
+    float& at(const std::ptrdiff_t row_i, const std::ptrdiff_t col_i);
+    const float& at(const std::ptrdiff_t row_i, const std::ptrdiff_t col_i) const;
 private:
     size_t n_row_{ 0 };
     size_t n_col_{ 0 };
