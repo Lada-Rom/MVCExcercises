@@ -9,7 +9,6 @@ StackL::Node::Node(float val, Node* p)
     , next_(p) {}
 
 StackL::Node::~Node() {
-    std::cout << value << std::endl;
     delete next_;
 }
 
@@ -50,4 +49,11 @@ const float& StackL::top() const {
 
 void StackL::push(const float value) {
     head_ = new Node(value, head_);
+}
+
+void StackL::pop() {
+    if (!is_empty())
+        head_ = std::move(head_ -> next_);
+    else
+        throw std::logic_error("Stack is empty");
 }
