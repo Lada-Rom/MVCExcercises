@@ -16,6 +16,12 @@
     <Filter Include="matrixa">
       <UniqueIdentifier>{a03ca75c-91fb-42a2-81c2-f3c35fbf4b67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="matrixl">
+      <UniqueIdentifier>{e8f55e9d-2fa9-48b9-b494-55d99a3c7265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stackl">
+      <UniqueIdentifier>{221130ae-5a00-4e2f-b077-7c98c57cb09a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="complex\complex.cpp">
@@ -33,6 +39,12 @@
     <ClCompile Include="matrixa\matrixa.cpp">
       <Filter>matrixa</Filter>
     </ClCompile>
+    <ClCompile Include="matrixl\matrixl.cpp">
+      <Filter>matrixl</Filter>
+    </ClCompile>
+    <ClCompile Include="stackl\stackl.cpp">
+      <Filter>stackl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex\complex.h">
@@ -49,6 +61,12 @@
     </ClInclude>
     <ClInclude Include="matrixa\matrixa.h">
       <Filter>matrixa</Filter>
+    </ClInclude>
+    <ClInclude Include="matrixl\matrixl.h">
+      <Filter>matrixl</Filter>
+    </ClInclude>
+    <ClInclude Include="stackl\stackl.h">
+      <Filter>stackl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

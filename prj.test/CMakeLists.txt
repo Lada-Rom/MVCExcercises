@@ -3,4 +3,6 @@ add_subdirectory(catch2_rational)
 add_subdirectory(catch2_longint)
 add_subdirectory(catch2_dynarray)
 add_subdirectory(catch2_matrixa)
+add_subdirectory(catch2_matrixl)
+add_subdirectory(catch2_stackl)
 
