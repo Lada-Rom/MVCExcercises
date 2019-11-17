@@ -17,9 +17,20 @@ StackL::StackL(const StackL& rhs)
     : head_(rhs.head_ ? new Node(*rhs.head_) : nullptr) {
 }
 
-StackL& StackL::operator=(const StackL& rhs) {
-    StackL temp(rhs);
+StackL::StackL(StackL&& temp)
+    : head_(temp.head_) {
+    temp.head_ = nullptr;
+}
+
+StackL& StackL::operator=(StackL&& temp) {
     std::swap(head_, temp.head_);
+    return *this;
+}
+
+StackL& StackL::operator=(const StackL& rhs) {
+    if(&rhs != this){
+        *this = StackL(rhs);
+    }
     return *this;
 }
 

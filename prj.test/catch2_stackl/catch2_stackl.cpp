@@ -38,6 +38,19 @@ TEST_CASE("StackL copy operator=", "[stackl]") {
     CHECK(st1.top() == st2.top());
 }
 
+TEST_CASE("StackL move ctor and assignment", "[stackl]") {
+    StackL st1;
+    st1.push(4);
+
+    StackL st2(std::move(st1));
+    CHECK(st2.top() == 4);
+    CHECK(st1.is_empty());
+
+    st1 = std::move(st2);
+    CHECK(st1.top() == 4);
+    CHECK(st2.is_empty());
+}
+
 // before and after normalization
 //static std::array<const char*, 14> well_formated{
 //    "0/1",    "0/1",

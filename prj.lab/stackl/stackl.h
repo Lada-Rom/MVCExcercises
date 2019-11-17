@@ -16,6 +16,9 @@ public:
     StackL& operator=(const StackL&);
     ~StackL() {delete head_;}
 
+    StackL(StackL&&);
+    StackL& operator=(StackL&&);
+
     void push(const float value);
     void pop();
 
