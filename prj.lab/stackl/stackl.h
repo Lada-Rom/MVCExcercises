@@ -14,6 +14,7 @@ public:
     StackL() = default;
     StackL(const StackL&);
     StackL& operator=(const StackL&);
+    ~StackL() {delete head_;}
 
     void push(const float value);
     void pop();
@@ -22,19 +23,24 @@ public:
     const float& top() const;
 
     bool is_empty() const { return !head_; }
-private:
 
+private:
     struct Node {
         Node() = default;
-        Node(float val, std::unique_ptr<Node> p) 
+        Node(float val, Node* p) 
             : value(val)
-            , next_(std::move(p)) {}
+            , next_(p) {}
+
+        ~Node() {
+            std::cout << value << std::endl;
+            delete next_;
+        }
 
         float value{0.0f};
-        std::unique_ptr<Node> next_;
+        Node* next_{};
     };
 
-    std::unique_ptr<Node> head_;
+    Node* head_{};
 };
 
 #endif

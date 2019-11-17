@@ -15,5 +15,5 @@ const float& StackL::top() const {
 }
 
 void StackL::push(const float value) {
-    head_.reset(new Node(value, std::move(head_)));
+    head_ = new Node(value, head_);
 }

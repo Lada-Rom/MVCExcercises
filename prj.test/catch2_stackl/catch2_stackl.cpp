@@ -20,6 +20,13 @@ TEST_CASE("StackL push", "[stackl]") {
     CHECK(st.top() == 2);
 }
 
+TEST_CASE("StackL temp", "[stackl]") {
+    StackL st;
+
+    for(auto i = 0; i < 10; ++i)
+        st.push(i);
+}
+
 // before and after normalization
 //static std::array<const char*, 14> well_formated{
 //    "0/1",    "0/1",
