@@ -13,15 +13,21 @@ StackL::Node::~Node() {
     delete next_;
 }
 
+StackL::StackL(const StackL& rhs)
+    : head_(rhs.head_ ? new Node(*rhs.head_) : nullptr) {
+}
+
+StackL& StackL::operator=(const StackL& rhs) {
+    StackL temp(rhs);
+    std::swap(head_, temp.head_);
+    return *this;
+}
+
 float& StackL::top() {
     if (!is_empty())
         return head_->value;
     else
         throw std::logic_error("Stack is empty");
-}
-
-StackL::StackL(const StackL& rhs)
-    : head_(rhs.head_ ? new Node(*rhs.head_) : nullptr) {
 }
 
 const float& StackL::top() const {

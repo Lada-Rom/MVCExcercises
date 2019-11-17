@@ -14,16 +14,26 @@ TEST_CASE("StackL ctor", "[stackl]") {
 
 TEST_CASE("StackL push", "[stackl]") {
     StackL st;
-    st.push(2);
+    st.push(1);
 
     CHECK(!st.is_empty());
-    CHECK(st.top() == 2);
+    CHECK(st.top() == 1);
 }
 
 TEST_CASE("StackL copy", "[stackl]") {
     StackL st1;
     st1.push(2);
     StackL st2(st1);
+
+    CHECK(st1.top() == st2.top());
+}
+
+TEST_CASE("StackL copy operator=", "[stackl]") {
+    StackL st1;
+    StackL st2;
+
+    st1.push(3);
+    st2 = st1;
 
     CHECK(st1.top() == st2.top());
 }
