@@ -20,11 +20,12 @@ TEST_CASE("StackL push", "[stackl]") {
     CHECK(st.top() == 2);
 }
 
-TEST_CASE("StackL temp", "[stackl]") {
-    StackL st;
+TEST_CASE("StackL copy", "[stackl]") {
+    StackL st1;
+    st1.push(2);
+    StackL st2(st1);
 
-    for(auto i = 0; i < 10; ++i)
-        st.push(i);
+    CHECK(st1.top() == st2.top());
 }
 
 // before and after normalization

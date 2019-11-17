@@ -27,14 +27,9 @@ public:
 private:
     struct Node {
         Node() = default;
-        Node(float val, Node* p) 
-            : value(val)
-            , next_(p) {}
-
-        ~Node() {
-            std::cout << value << std::endl;
-            delete next_;
-        }
+        Node(const Node&);
+        Node(float, Node*);
+        ~Node();
 
         float value{0.0f};
         Node* next_{};
