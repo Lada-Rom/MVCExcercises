@@ -32,3 +32,6 @@ _ReSharper*/
 packages/
 *.sdf
 *.opensdf
+*.vcxproj
+*.vcxproj.filters
+*.sln
