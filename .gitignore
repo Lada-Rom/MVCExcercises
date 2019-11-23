@@ -35,3 +35,4 @@ packages/
 *.vcxproj
 *.vcxproj.filters
 *.sln
+/.svn/
