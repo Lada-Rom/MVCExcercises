@@ -25,6 +25,9 @@
     <Filter Include="queuea">
       <UniqueIdentifier>{0f21387d-daad-4a2b-b603-894a6ca98fa6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dynarrayt">
+      <UniqueIdentifier>{060bb203-6fc9-4788-baf5-1692e5074fa7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="complex\complex.cpp">
@@ -51,6 +54,9 @@
     <ClCompile Include="queuea\queuea.cpp">
       <Filter>queuea</Filter>
     </ClCompile>
+    <ClCompile Include="dynarrayt\dynarrayt.cpp">
+      <Filter>dynarrayt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex\complex.h">
@@ -76,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="queuea\queuea.h">
       <Filter>queuea</Filter>
+    </ClInclude>
+    <ClInclude Include="dynarrayt\dynarrayt.h">
+      <Filter>dynarrayt</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
