@@ -14,12 +14,8 @@ std::unique_ptr<float[]> allocate(
 
 } // namespace
 
-void MatrixA::swap(MatrixA& rhs) {
-    if (this != &rhs) {
-        std::swap(n_row_, rhs.n_row_);
-        std::swap(n_col_, rhs.n_col_);
-        std::swap(data_, rhs.data_);
-    }
+MatrixA& MatrixA::operator=(const MatrixA& rhs) {
+    return *this = MatrixA(rhs);
 }
 
 MatrixA::MatrixA(const MatrixA& rhs)
