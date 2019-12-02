@@ -36,14 +36,12 @@ TEST_CASE("DynArray copy ctor", "[dynarray]") {
 
 TEST_CASE("DynArray operator=", "[dynarray]") {
     DynArray ar(10);
-    for (int i(0); i < ar.size(); i += 1) {
+    for (int i(0); i < ar.size(); i += 1)
         ar[i] = float(i);
-    }
-    // check self assignment
+// check self assignment
     ar = ar;
-    for (int i(0); i < ar.size(); i += 1) {
+    for (int i(0); i < ar.size(); i += 1)
         CHECK(ar[i] == float(i));
-    }
 
     DynArray ar_copy;
     CHECK(ar.size() != ar_copy.size());
