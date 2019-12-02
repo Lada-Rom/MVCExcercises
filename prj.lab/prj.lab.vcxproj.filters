@@ -22,6 +22,9 @@
     <Filter Include="stackl">
       <UniqueIdentifier>{221130ae-5a00-4e2f-b077-7c98c57cb09a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="queuea">
+      <UniqueIdentifier>{0f21387d-daad-4a2b-b603-894a6ca98fa6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="complex\complex.cpp">
@@ -45,6 +48,9 @@
     <ClCompile Include="stackl\stackl.cpp">
       <Filter>stackl</Filter>
     </ClCompile>
+    <ClCompile Include="queuea\queuea.cpp">
+      <Filter>queuea</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex\complex.h">
@@ -67,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="stackl\stackl.h">
       <Filter>stackl</Filter>
+    </ClInclude>
+    <ClInclude Include="queuea\queuea.h">
+      <Filter>queuea</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
