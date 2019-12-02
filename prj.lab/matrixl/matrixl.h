@@ -10,28 +10,28 @@
 
 class MatrixL {
 public:
+    using Row = std::unique_ptr<float[]>;
+
     MatrixL() = default;
     MatrixL(const MatrixL&);
     MatrixL(const std::ptrdiff_t, const std::ptrdiff_t);
     ~MatrixL() = default;
     MatrixL& operator=(const MatrixL&);
 
-    //MatrixL(MatrixL&&) = default;
-    //MatrixL& operator=(MatrixL&&) = default;
+    MatrixL(MatrixL&&) = default;
+    MatrixL& operator=(MatrixL&&) = default;
 
     std::ptrdiff_t row_count() const { return n_row_; }
     std::ptrdiff_t col_count() const { return n_col_; }
 
-    void swap(MatrixL&);
-
     float& at(const std::ptrdiff_t row_i, const std::ptrdiff_t col_i);
     const float& at(const std::ptrdiff_t row_i, const std::ptrdiff_t col_i) const;
 private:
+    void check_range(const std::ptrdiff_t, const std::ptrdiff_t) const;
+
     size_t n_row_{ 0 };
     size_t n_col_{ 0 };
-    std::unique_ptr<float[]> data_;
+    std::unique_ptr<Row[]> data_{};
 };
-
-inline void swap(MatrixL& lhs, MatrixL& rhs) { lhs.swap(rhs); }
 
 #endif

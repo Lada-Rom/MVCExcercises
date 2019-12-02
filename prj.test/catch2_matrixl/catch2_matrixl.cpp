@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
+#include <catch2\catch.hpp>
 
 #include <matrixl/matrixl.h>
 
@@ -26,6 +26,22 @@ TEST_CASE("MatrixL copy ctor", "[matrixl]") {
 }
 
 TEST_CASE("MatrixL operator=", "[matrixl]") {
+    MatrixL m3x4(4, 3);
+    for (std::ptrdiff_t i_row(0); i_row < m3x4.row_count(); i_row += 1) {
+        for (std::ptrdiff_t i_col(0); i_col < m3x4.col_count(); i_col += 1) {
+            m3x4.at(i_row, i_col) = (i_row + 1) * (i_col + 1);
+        }
+    }
+
+    const MatrixL& cm = m3x4;
+    for (std::ptrdiff_t i_row(0); i_row < cm.row_count(); i_row += 1) {
+        for (std::ptrdiff_t i_col(0); i_col < cm.col_count(); i_col += 1) {
+            CHECK_NOTHROW(cm.at(i_row, i_col));
+            CHECK(cm.at(i_row, i_col) == Approx((i_row + 1) * (i_col + 1)));
+            CHECK_THROWS(cm.at(-1, i_col));
+            CHECK_THROWS(cm.at(m3x4.row_count(), i_col));
+        }
+    }
 }
 
 TEST_CASE("MatrixL operator[]", "[matrixl]") {
