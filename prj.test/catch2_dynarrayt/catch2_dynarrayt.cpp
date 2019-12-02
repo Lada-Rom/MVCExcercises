@@ -1,27 +1,27 @@
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
-#include <dynarray/dynarray.h>
+#include <dynarrayt/dynarrayt.h>
 #include  <limits>
 
 constexpr std::ptrdiff_t big_size = std::ptrdiff_t(std::numeric_limits<int>::max()) + 1;
 
-TEST_CASE("DynArray ctor", "[dynarray]") {
-    CHECK(0 == DynArray().size());
-    CHECK(15 == DynArray(15).size());
-    //CHECK(big_size == DynArray(big_size).size());
+TEST_CASE("DynArrayT ctor", "[dynarray]") {
+    CHECK(0 == DynArrayT().size());
+    CHECK(15 == DynArrayT(15).size());
+    //CHECK(big_size == DynArrayT(big_size).size());
 
-    DynArray ar(10);
+    DynArrayT ar(10);
     CHECK(ar[0] == Approx(0.0f));
     CHECK(ar[ar.size() - 1] == Approx(0.0f));
 }
 
-TEST_CASE("DynArray copy ctor", "[dynarray]") {
-    DynArray ar(10);
+TEST_CASE("DynArrayT copy ctor", "[dynarray]") {
+    DynArrayT ar(10);
     for (int i(0); i < ar.size(); i += 1) {
         ar[i] = float(i);
     }
-    DynArray ar_copy(ar);
+    DynArrayT ar_copy(ar);
     CHECK(ar.size() == ar_copy.size());
     for (int i(0); i < ar.size(); i += 1) {
         CHECK(ar[i] == ar_copy[i]);
@@ -34,16 +34,18 @@ TEST_CASE("DynArray copy ctor", "[dynarray]") {
     }
 }
 
-TEST_CASE("DynArray operator=", "[dynarray]") {
-    DynArray ar(10);
-    for (int i(0); i < ar.size(); i += 1)
+TEST_CASE("DynArrayT operator=", "[dynarray]") {
+    DynArrayT ar(10);
+    for (int i(0); i < ar.size(); i += 1) {
         ar[i] = float(i);
-// check self assignment
+    }
+    // check self assignment
     ar = ar;
-    for (int i(0); i < ar.size(); i += 1)
+    for (int i(0); i < ar.size(); i += 1) {
         CHECK(ar[i] == float(i));
+    }
 
-    DynArray ar_copy;
+    DynArrayT ar_copy;
     CHECK(ar.size() != ar_copy.size());
     ar_copy = ar;
     for (int i(0); i < ar.size(); i += 1) {
@@ -56,7 +58,7 @@ TEST_CASE("DynArray operator=", "[dynarray]") {
         CHECK(ar[i] != ar_copy[i]);
     }
 
-    DynArray ar100(100);
+    DynArrayT ar100(100);
     for (int i(0); i < ar100.size(); i += 1) {
         ar100[i] = float(i);
     }
@@ -67,8 +69,8 @@ TEST_CASE("DynArray operator=", "[dynarray]") {
 
 }
 
-TEST_CASE("DynArray operator[]", "[dynarray]") {
-    DynArray ar(10);
+TEST_CASE("DynArrayT operator[]", "[dynarray]") {
+    DynArrayT ar(10);
     CHECK_NOTHROW(ar[0]);
     CHECK_NOTHROW(ar[ar.size() - 1]);
     CHECK_THROWS(ar[-1]);
@@ -80,8 +82,8 @@ TEST_CASE("DynArray operator[]", "[dynarray]") {
     CHECK_THROWS(car[car.size()]);
 }
 
-TEST_CASE("DynArray resize()", "[dynarray]") {
-    DynArray ar(10);
+TEST_CASE("DynArrayT resize()", "[dynarray]") {
+    DynArrayT ar(10);
     for (int i(0); i < ar.size(); i += 1) {
         ar[i] = float(i);
     }

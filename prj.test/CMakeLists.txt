@@ -6,6 +6,7 @@ add_subdirectory(catch2_matrixa)
 add_subdirectory(catch2_matrixl)
 add_subdirectory(catch2_stackl)
 add_subdirectory(catch2_queuea)
+add_subdirectory(catch2_dynarrayt)
 
 set_property(TARGET 
 	catch2_complex 
@@ -15,5 +16,6 @@ set_property(TARGET
 	catch2_matrixa 
 	catch2_matrixl 
 	catch2_queuea
+	catch2_dynarrayt
 	catch2_stackl PROPERTY CXX_STANDARD 17)
 
