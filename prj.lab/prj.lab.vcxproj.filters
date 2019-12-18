@@ -31,6 +31,9 @@
     <Filter Include="stacka">
       <UniqueIdentifier>{df18c4e3-6bb1-4d6d-9048-cbbd3978bd46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="queuel">
+      <UniqueIdentifier>{91158107-c903-49cf-ab95-236b6f38e7d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="complex\complex.cpp">
@@ -63,6 +66,9 @@
     <ClCompile Include="stacka\stacka.cpp">
       <Filter>stacka</Filter>
     </ClCompile>
+    <ClCompile Include="queuel\queuel.cpp">
+      <Filter>queuel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex\complex.h">
@@ -94,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="stacka\stacka.h">
       <Filter>stacka</Filter>
+    </ClInclude>
+    <ClInclude Include="queuel\queuel.h">
+      <Filter>queuel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
