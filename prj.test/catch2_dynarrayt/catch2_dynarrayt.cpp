@@ -4,24 +4,32 @@
 #include <dynarrayt/dynarrayt.h>
 #include  <limits>
 
-constexpr std::ptrdiff_t big_size = std::ptrdiff_t(std::numeric_limits<int>::max()) + 1;
+constexpr std::ptrdiff_t big_size =
+static_cast<std::ptrdiff_t>(std::numeric_limits<int>::max() / sizeof(float) + 1);
 
-TEST_CASE("DynArrayT ctor", "[dynarray]") {
-    CHECK(0 == DynArrayT().size());
-    CHECK(15 == DynArrayT(15).size());
-    //CHECK(big_size == DynArrayT(big_size).size());
+TEST_CASE("DynArrayT<float> ctor", "[dynarray]") {
+    CHECK(0 == DynArrayT<float>().size());
+    CHECK(15 == DynArrayT<float>(15).size());
 
-    DynArrayT ar(10);
+#ifdef CHECK_DYNARRAY_BIG_SIZE_ALLOCK
+    // test with huge memory chunk allocation
+    CHECK(big_size == DynArrayT<float>(big_size).size());
+#endif
+
+    DynArrayT<float> ar(10);
     CHECK(ar[0] == Approx(0.0f));
     CHECK(ar[ar.size() - 1] == Approx(0.0f));
+
+    CHECK_NOTHROW(DynArrayT<float>(0));
+    CHECK_THROWS(DynArrayT<float>(-1));
 }
 
-TEST_CASE("DynArrayT copy ctor", "[dynarray]") {
-    DynArrayT ar(10);
+TEST_CASE("DynArrayT<float> copy ctor", "[dynarray]") {
+    DynArrayT<float> ar(10);
     for (int i(0); i < ar.size(); i += 1) {
         ar[i] = float(i);
     }
-    DynArrayT ar_copy(ar);
+    DynArrayT<float> ar_copy(ar);
     CHECK(ar.size() == ar_copy.size());
     for (int i(0); i < ar.size(); i += 1) {
         CHECK(ar[i] == ar_copy[i]);
@@ -34,8 +42,8 @@ TEST_CASE("DynArrayT copy ctor", "[dynarray]") {
     }
 }
 
-TEST_CASE("DynArrayT operator=", "[dynarray]") {
-    DynArrayT ar(10);
+TEST_CASE("DynArrayT<float> operator=", "[dynarray]") {
+    DynArrayT<float> ar(10);
     for (int i(0); i < ar.size(); i += 1) {
         ar[i] = float(i);
     }
@@ -45,7 +53,7 @@ TEST_CASE("DynArrayT operator=", "[dynarray]") {
         CHECK(ar[i] == float(i));
     }
 
-    DynArrayT ar_copy;
+    DynArrayT<float> ar_copy;
     CHECK(ar.size() != ar_copy.size());
     ar_copy = ar;
     for (int i(0); i < ar.size(); i += 1) {
@@ -58,7 +66,7 @@ TEST_CASE("DynArrayT operator=", "[dynarray]") {
         CHECK(ar[i] != ar_copy[i]);
     }
 
-    DynArrayT ar100(100);
+    DynArrayT<float> ar100(100);
     for (int i(0); i < ar100.size(); i += 1) {
         ar100[i] = float(i);
     }
@@ -69,8 +77,8 @@ TEST_CASE("DynArrayT operator=", "[dynarray]") {
 
 }
 
-TEST_CASE("DynArrayT operator[]", "[dynarray]") {
-    DynArrayT ar(10);
+TEST_CASE("DynArrayT<float> operator[]", "[dynarray]") {
+    DynArrayT<float> ar(10);
     CHECK_NOTHROW(ar[0]);
     CHECK_NOTHROW(ar[ar.size() - 1]);
     CHECK_THROWS(ar[-1]);
@@ -82,8 +90,8 @@ TEST_CASE("DynArrayT operator[]", "[dynarray]") {
     CHECK_THROWS(car[car.size()]);
 }
 
-TEST_CASE("DynArrayT resize()", "[dynarray]") {
-    DynArrayT ar(10);
+TEST_CASE("DynArrayT<float> resize()", "[dynarray]") {
+    DynArrayT<float> ar(10);
     for (int i(0); i < ar.size(); i += 1) {
         ar[i] = float(i);
     }
@@ -98,4 +106,8 @@ TEST_CASE("DynArrayT resize()", "[dynarray]") {
     for (int i(5); i < 25; i += 1) {
         CHECK(ar[i] == 0.0f);
     }
+
+    CHECK_NOTHROW(ar.resize(0));
+    CHECK_NOTHROW(ar.resize(ar.size() * 5));
+    CHECK_THROWS(ar.resize(-1));
 }
