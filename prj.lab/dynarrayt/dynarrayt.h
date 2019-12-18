@@ -8,8 +8,6 @@
 #include <sstream>
 #include <string>
 
-namespace tolstenko_l_s {
-
 template<typename T>
 class DynArrayT {
 public:
@@ -17,14 +15,14 @@ public:
     using const_iterator = const T*;
 
     DynArrayT() = default;
-    DynArrayT(size_t, const T& = T());
+    DynArrayT(ptrdiff_t, const T& = T());
     DynArrayT(const DynArrayT& other) : DynArrayT(other, other.size()) { }
     DynArrayT(DynArrayT&& other) noexcept { swap(other); };
     DynArrayT(std::initializer_list<T> list) : DynArrayT(list, list.size()) { }
 
     ~DynArrayT() { std::destroy(begin(), end()); }
 
-    size_t size() const noexcept { return size_; }
+    ptrdiff_t size() const noexcept { return size_; }
     bool empty() const noexcept { return size_ == 0; }
 
     iterator begin() noexcept { return data_.get(); }
@@ -33,13 +31,13 @@ public:
     iterator end() noexcept { return data_.get() + size_; }
     const_iterator end() const noexcept { return data_.get() + size_; }
 
-    void reserve(size_t);
-    void resize(size_t, const T& = T());
+    void reserve(ptrdiff_t);
+    void resize(ptrdiff_t, const T& = T());
 
     void swap(DynArrayT&) noexcept;
 
-    T& operator [] (size_t);
-    const T& operator [] (size_t) const;
+    T& operator [] (ptrdiff_t);
+    const T& operator [] (ptrdiff_t) const;
 
     DynArrayT& operator = (const DynArrayT&);
     DynArrayT& operator = (DynArrayT&& rhs) noexcept { swap(rhs); return *this; }
@@ -48,18 +46,15 @@ private:
     struct Deallocator{ void operator()(T* p) const { std::free(p); } };
     using StorageKeeper = std::unique_ptr<T[], Deallocator>;
 
-    static StorageKeeper allocate(size_t);
+    static StorageKeeper allocate(ptrdiff_t);
 
     template <typename Range>
-    DynArrayT(const Range&, size_t capacity);
+    DynArrayT(const Range&, ptrdiff_t capacity);
 
-    size_t capacity_{0};
-    size_t size_{0};
+    ptrdiff_t capacity_{0};
+    ptrdiff_t size_{0};
     StorageKeeper data_;
 };
-
-template <typename T>
-void swap(DynArrayT<T>& lhs, DynArrayT<T>& rhs) noexcept { lhs.swap(rhs); }
 
 template<typename T>
 bool operator == (const DynArrayT<T>&, const DynArrayT<T>&);
@@ -67,23 +62,15 @@ bool operator == (const DynArrayT<T>&, const DynArrayT<T>&);
 template<typename T>
 bool operator != (const DynArrayT<T>&, const DynArrayT<T>&);
 
-} // namespace tolstenko_l_s
-
-namespace std {
-
-using tolstenko_l_s::swap;
-
-} // namespace std
-
-using DynArrayT = tolstenko_l_s::DynArrayT<float>;
-
 ////////////////////////////////////////////////////////////////////////////////
-namespace tolstenko_l_s {
 
 template<typename T>
-typename DynArrayT<T>::StorageKeeper DynArrayT<T>::allocate(size_t size) {
+typename DynArrayT<T>::StorageKeeper DynArrayT<T>::allocate(ptrdiff_t size) {
+    if(size < 0)
+        throw std::logic_error("Wrong size");
 
-    return StorageKeeper(static_cast<T*>(std::malloc(size * sizeof(T))));
+    return size ? StorageKeeper(static_cast<T*>(std::malloc(size * sizeof(T))))
+        : StorageKeeper();
 }
 
 template<typename T>
@@ -96,17 +83,18 @@ void DynArrayT<T>::swap(DynArrayT<T>& rhs) noexcept {
 }
 
 template<typename T>
-DynArrayT<T>::DynArrayT(size_t size, const T& value) 
+DynArrayT<T>::DynArrayT(ptrdiff_t size, const T& value) 
     : size_(size)
     , capacity_(size)
     , data_(allocate(size)) {
 
-    std::uninitialized_fill(begin(), end(), value);
+    if (size)
+        std::uninitialized_fill(begin(), end(), value);
 }
 
 template<typename T>
 template <typename Range>
-DynArrayT<T>::DynArrayT(const Range& range, size_t capacity)
+DynArrayT<T>::DynArrayT(const Range& range, ptrdiff_t capacity)
     : size_(std::size(range))
     , capacity_(capacity)
     , data_(allocate(capacity)) {
@@ -116,15 +104,15 @@ DynArrayT<T>::DynArrayT(const Range& range, size_t capacity)
 }
 
 template<typename T>
-T& DynArrayT<T>::operator [] (size_t i) {
-    if(i >= size_)
+T& DynArrayT<T>::operator [] (ptrdiff_t i) {
+    if(i >= size_ || i < 0)
         throw std::out_of_range("Array's index is out of range");
     return data_[i];
 }
 
 template<typename T>
-const T& DynArrayT<T>::operator [] (size_t i) const {
-    if (i >= size_)
+const T& DynArrayT<T>::operator [] (ptrdiff_t i) const {
+    if (i >= size_ || i < 0)
         throw std::out_of_range("Array's index is out of range");
     return data_[i];
 }
@@ -138,19 +126,22 @@ DynArrayT<T>& DynArrayT<T>::operator =(const DynArrayT& other) {
 }
 
 template<typename T>
-void DynArrayT<T>::reserve(size_t size) {
+void DynArrayT<T>::reserve(ptrdiff_t size) {
     if (capacity_ <= size) {
         *this = DynArrayT(*this, size);
     }
 }
 
 template<typename T>
-void DynArrayT<T>::resize(size_t size, const T& value) {
+void DynArrayT<T>::resize(ptrdiff_t size, const T& value) {
     reserve(size);
     if (size > size_) {
         std::uninitialized_fill(end(), begin() + size, value);
     }
     else {
+        if (size < 0)
+            throw std::logic_error("Wrong size");
+
         std::destroy(begin() + size, end());
     }
     size_ = size;
@@ -161,7 +152,7 @@ bool operator == (const DynArrayT<T>& lhs, const DynArrayT<T>& rhs) {
     if (lhs.size() != rhs.size())
         return false;
 
-    for (size_t i = 0; i < lhs.size(); ++i) {
+    for (ptrdiff_t i = 0; i < lhs.size(); ++i) {
         if (lhs[i] != rhs[i])
             return false;
     }
@@ -173,7 +164,5 @@ template<typename T>
 bool operator != (const DynArrayT<T>& lhs, const DynArrayT<T>& rhs) {
     return !(lhs == rhs);
 }
-
-} //namespace tolstenko_l_s
 
 #endif
