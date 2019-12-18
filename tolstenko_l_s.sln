@@ -32,6 +32,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "catch2_queuea", "prj.test\c
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "catch2_dynarrayt", "prj.test\catch2_dynarrayt\catch2_dynarrayt.vcxproj", "{E7071118-45E5-41B0-9ADC-33B581042131}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "catch2_stacka", "prj.test\catch2_stacka\catch2_stacka.vcxproj", "{74A1566C-3D65-4576-B53B-97B8F7335E11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -120,6 +122,14 @@ Global
 		{E7071118-45E5-41B0-9ADC-33B581042131}.Release|Win32.Build.0 = Release|Win32
 		{E7071118-45E5-41B0-9ADC-33B581042131}.Release|x64.ActiveCfg = Release|x64
 		{E7071118-45E5-41B0-9ADC-33B581042131}.Release|x64.Build.0 = Release|x64
+		{74A1566C-3D65-4576-B53B-97B8F7335E11}.Debug|Win32.ActiveCfg = Debug|Win32
+		{74A1566C-3D65-4576-B53B-97B8F7335E11}.Debug|Win32.Build.0 = Debug|Win32
+		{74A1566C-3D65-4576-B53B-97B8F7335E11}.Debug|x64.ActiveCfg = Debug|x64
+		{74A1566C-3D65-4576-B53B-97B8F7335E11}.Debug|x64.Build.0 = Debug|x64
+		{74A1566C-3D65-4576-B53B-97B8F7335E11}.Release|Win32.ActiveCfg = Release|Win32
+		{74A1566C-3D65-4576-B53B-97B8F7335E11}.Release|Win32.Build.0 = Release|Win32
+		{74A1566C-3D65-4576-B53B-97B8F7335E11}.Release|x64.ActiveCfg = Release|x64
+		{74A1566C-3D65-4576-B53B-97B8F7335E11}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,6 +145,7 @@ Global
 		{426D4E84-AA91-4B4D-A5E4-21FF58E8FBEA} = {1D4AA145-AFE3-42C8-9B0D-B6C74038F72F}
 		{C4A5B154-8F5F-48F9-9F6D-C2FC406383E7} = {1D4AA145-AFE3-42C8-9B0D-B6C74038F72F}
 		{E7071118-45E5-41B0-9ADC-33B581042131} = {1D4AA145-AFE3-42C8-9B0D-B6C74038F72F}
+		{74A1566C-3D65-4576-B53B-97B8F7335E11} = {1D4AA145-AFE3-42C8-9B0D-B6C74038F72F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2A610D8-7622-4F0D-BD6B-0270DC4B925C}

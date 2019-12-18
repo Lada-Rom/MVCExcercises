@@ -28,6 +28,9 @@
     <Filter Include="dynarrayt">
       <UniqueIdentifier>{060bb203-6fc9-4788-baf5-1692e5074fa7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="stacka">
+      <UniqueIdentifier>{df18c4e3-6bb1-4d6d-9048-cbbd3978bd46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="complex\complex.cpp">
@@ -57,6 +60,9 @@
     <ClCompile Include="dynarrayt\dynarrayt.cpp">
       <Filter>dynarrayt</Filter>
     </ClCompile>
+    <ClCompile Include="stacka\stacka.cpp">
+      <Filter>stacka</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex\complex.h">
@@ -85,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="dynarrayt\dynarrayt.h">
       <Filter>dynarrayt</Filter>
+    </ClInclude>
+    <ClInclude Include="stacka\stacka.h">
+      <Filter>stacka</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
