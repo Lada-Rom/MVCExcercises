@@ -54,6 +54,4 @@ void StackL::push(const float value) {
 void StackL::pop() {
     if (!is_empty())
         head_ = std::move(head_ -> next_);
-    else
-        throw std::logic_error("Stack is empty");
 }
