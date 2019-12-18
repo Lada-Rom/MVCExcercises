@@ -1,0 +1,5 @@
+add_executable(catch2_queuel catch2_queuel.cpp)
+target_link_libraries(catch2_queuel queuel)
+include(CTest)
+include(Catch)
+catch_discover_tests(catch2_queuel)
